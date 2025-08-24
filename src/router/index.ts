@@ -1,14 +1,33 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/DashboardView.vue'
+import AppLayout from '../components/AppLayout.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: HomeView,
+      component: AppLayout,
+      children: [
+        {
+          path: '/',
+          name: 'home',
+          component: HomeView,
+        },
+        {
+          path: '/:id',
+          name: 'doctor-info',
+          component: () => import('../views/doctor/DoctorDetailView.vue'),
+          props: true,
+        }
+      ]
     },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('../views/auth/LoginView.vue'),
+    },
+    
     // {
     //   path: '/about',
     //   name: 'about',
